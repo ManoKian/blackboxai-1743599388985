@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Confirmation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .confirmation-animation {
+            animation: bounce 1s infinite alternate;
+        }
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-10px); }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen flex items-center justify-center">
+        <div class="bg-white p-8 rounded-lg shadow-md max-w-md w-full text-center">
+            <div class="text-green-500 text-6xl mb-4 confirmation-animation">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h1 class="text-2xl font-bold mb-2">Order Received!</h1>
+            <p class="text-gray-600 mb-6">Your order has been placed successfully and is being prepared.</p>
+            <div class="bg-gray-100 p-4 rounded-lg mb-6">
+                <p id="order-id" class="font-mono text-lg"></p>
+                <p id="order-status" class="text-yellow-600 font-medium mt-2">
+                    <i class="fas fa-clock"></i> Currently being prepared
+                </p>
+            </div>
+            <div class="flex justify-center space-x-4">
+                <a href="index.html" class="bg-yellow-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-yellow-600">
+                    Back to Menu
+                </a>
+                <a href="kitchen.html" class="bg-blue-500 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-600">
+                    View Kitchen
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Display the order ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+        if (orderId) {
+            document.getElementById('order-id').textContent = `Order #${orderId.substring(6)}`;
+            
+            // Check order status periodically
+            setInterval(() => {
+                fetch(`../php/get_orders.php?orderId=${orderId}`)
+                    .then(response => response.json())
+                    .then(orders => {
+                        const order = orders.find(o => o.orderId === orderId);
+                        if (order) {
+                            const statusElement = document.getElementById('order-status');
+                            if (order.status === 'ready') {
+                                statusElement.innerHTML = '<i class="fas fa-check"></i> Ready for pickup!';
+                                statusElement.className = 'text-green-600 font-medium mt-2';
+                            }
+                        }
+                    });
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

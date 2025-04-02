@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FastOrder - Checkout</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../styles/app.css">
+</head>
+<body class="bg-gray-100">
+    <header class="bg-yellow-500 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <h1 class="text-2xl font-bold">FastOrder</h1>
+            <div class="flex items-center space-x-4">
+                <button id="cart-btn" class="relative">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto p-4">
+        <h2 class="text-xl font-semibold mb-6">Complete Your Order</h2>
+        
+        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+            <h3 class="text-lg font-semibold mb-4">Order Summary</h3>
+            <div id="order-items" class="mb-4">
+                <!-- Order items will be loaded here -->
+            </div>
+            <div class="flex justify-between items-center border-t pt-4">
+                <span class="font-bold">Total:</span>
+                <span id="order-total" class="font-bold text-lg">$0.00</span>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-lg shadow-md p-6">
+            <h3 class="text-lg font-semibold mb-4">Payment Information</h3>
+            <form id="payment-form">
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Table Number (if applicable)</label>
+                    <input type="text" id="table-number" class="w-full p-2 border rounded">
+                </div>
+                
+                <div class="mb-4">
+                    <label class="block text-gray-700 mb-2">Special Instructions</label>
+                    <textarea id="special-notes" class="w-full p-2 border rounded" rows="3"></textarea>
+                </div>
+                
+                <div class="mb-6">
+                    <label class="block text-gray-700 mb-2">Payment Method</label>
+                    <div class="flex space-x-4">
+                        <label class="flex items-center">
+                            <input type="radio" name="payment-method" value="cash" checked class="mr-2">
+                            <span>Cash</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="payment-method" value="card" class="mr-2">
+                            <span>Credit/Debit Card</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full bg-yellow-500 text-white py-3 rounded-lg font-bold hover:bg-yellow-600">
+                    Place Order
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <script src="../scripts/cart.js"></script>
+</body>
+</html>
